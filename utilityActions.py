@@ -73,11 +73,12 @@ def switchAndShoot(a):
 		actions.shoot(a)
 	else:
 		return#switch to a weapon with ammo
+		#DO THIS
 
 def currentAmmo():
 	ammoType = mapWeaponToAmmoType(readData.getPlayerDetails()[4])
-	if(ammoType>0):
-		return readData.getPlayerDetails[5][ammoType]
+	if(ammoType>=0):
+		return readData.getPlayerDetails()[5][ammoType]
 	else:
 		return 9999 #fists or chainsaw dont require ammo
 
@@ -87,15 +88,15 @@ def mapWeaponToAmmoType(weaponNo):
 
 
 def findLowestHPEnemy(_range):
-	enemyList = readData.getEnemyDetails()
+	enemyList = readData.getEnemyDetails(readData.getPlayerDetails()[0])
 
 	lowestHP=9999
 	lowestEnemy=-1#negative means no enemies in range
-	for enemyID in enemyList:
-		dist=readData.getObjectDetails(enemyID)
-		if (dist <= _range and enemyID[1] < lowestHP):
-			lowestEnemy = enemyID
-			lowestHP = enemyID[1]
+	for enemy in enemyList:
+		dist = readData.getObjectDetails(enemy[0])[3]
+		if (dist <= _range and enemy[1] < lowestHP):
+			lowestEnemy = enemy[0]
+			lowestHP = enemy[1]
 
 	return lowestEnemy
 
@@ -109,7 +110,7 @@ def findClosestObject():
 			closestDist=dist
 			closestObject=obj[0]
 
-	return closestEnemy
+	return closestObject
 
 def faceObject(objectID):
 	objectDetails = readData.getObjectDetails(objectID)
@@ -123,14 +124,14 @@ def faceObject(objectID):
 def listSeenEnemies():
 	seenEnemyList = []
 	currentPlayerID = readData.getPlayerDetails()[0]
-	for enemies in getEnemyDetails(currentPlayerID):
-		if readData.LOS(currentPlayerID, enemies[0]):
+	for enemies in readData.getEnemyDetails(currentPlayerID):
+		if readData.LOS(str(currentPlayerID), str(enemies[0])):
 			seenEnemyList.append(enemies[0])
 
 	return seenEnemyList
 
 if __name__ == "__main__":
-    turnAbsAngle(10)
+    print(listSeenEnemies())
 
 #redundant function, replaced by listSeenEnemies
 

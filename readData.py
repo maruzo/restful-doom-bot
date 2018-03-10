@@ -73,7 +73,7 @@ def getObjectsDetails(currentPlayerID):
             eachEnemyXY.append(data[i]["position"]["x"])
             eachEnemyXY.append(data[i]["position"]["y"])
             eachEnemy.append(eachEnemyXY)
-            eachEnemy.append("distance")
+            eachEnemy.append(data[i]["distance"])
             returnData.append(eachEnemy)
 
     return returnData
@@ -95,10 +95,10 @@ def getObjectDetails(objectID):
             eachEnemyXY.append(data[i]["position"]["x"])
             eachEnemyXY.append(data[i]["position"]["y"])
             eachEnemy.append(eachEnemyXY)
-            eachEnemy.append("distance")
+            eachEnemy.append(data[i]["distance"])
             returnData.append(eachEnemy)
 
-    return returnData
+    return returnData[0]
 #-----------------------------------------------------------------------------------------
 
 #nicer functions that return the said data by an ID
