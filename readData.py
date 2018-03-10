@@ -1,10 +1,10 @@
 from request import get
 
-port = 6001
-def getPlayerDetails(port):
+
+def getPlayerDetails():
     returnData = []
     xy = []
-    data = get(port, "/api/player")
+    data = get("/api/player")
 
     xy.append(data["position"]["x"])
     xy.append(data["position"]["y"])
@@ -16,13 +16,13 @@ def getPlayerDetails(port):
          returnData.append(data["health"])
     returnData.append(data["angle"])
     returnData.append(xy)
-    
 
-    
+
+
     return returnData
-def getEnemyDetails(port, currentPlayerID):
+def getEnemyDetails(currentPlayerID):
     returnData = []
-    data = get(port, "/api/players")
+    data = get("/api/players")
 
     for i in range(len(data)):
         eachEnemy = []

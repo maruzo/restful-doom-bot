@@ -4,7 +4,10 @@ import json
 #port: 6001
 #url_extension: /api/world/objects
 #it returns the entire JSON
-def get(port, url_extension):
+
+port = "6001"
+
+def get(url_extension):
     url = "http://127.0.0.1:" + port
 
     r = requests.get(url + url_extension)
@@ -19,7 +22,7 @@ def get(port, url_extension):
 #port: 6001
 #url_extension: /api/world/objects
 #pyload: {'type': 'strafe-left','amount': 25}
-def post(port, url_extension, payload):
+def post(url_extension, payload):
     url = "http://127.0.0.1:" + port
 
     r = requests.post(url + url_extension, data=json.dumps(payload))
@@ -29,8 +32,8 @@ def post(port, url_extension, payload):
 
 
 if __name__ == "__main__":
-    print(get("6001", "/api/world/objects"))
-    print(post("6001", "/api/player/actions", {'type': 'strafe-left','amount': 25}))
+    print(get("/api/world/objects"))
+    print(post("/api/player/actions", {'type': 'strafe-left','amount': 25}))
 
 
 
