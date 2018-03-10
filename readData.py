@@ -30,6 +30,7 @@ def getPlayerDetails():
     returnData.append(xy)
     returnData.append(data["weapon"])
     returnData.append(list(data["ammo"].values()))
+    returnData.append(list(data["weapons"].values()))
 
     return returnData
 
@@ -53,6 +54,7 @@ def getEnemyDetails(currentPlayerID):
             eachEnemy.append(data[i]["weapon"])
             eachEnemy.append(data[i]["ammo"])
             eachEnemy.append(list(data[i]["ammo"].values()))
+            eachEnemy.append(list(data[i]["weapons"].values()))
             returnData.append(eachEnemy)
 
     return returnData
@@ -141,8 +143,13 @@ def LOS(id1, id2):
     data = get("/api/world/los/"+id1+"/"+id2+"")
     return data["los"];
 
+#-----------------------------------------------------------------------------------------
 
 
+def getWeaponsStatus(ID, details):
+    for i in range(len(details)):
+        if(details[i][0] == ID):
+            return(details[i][6])    
 
 #-----------------------------------------------------------------------------------------
 
@@ -151,4 +158,4 @@ if __name__ == "__main__":
     enemyDetails = getEnemyDetails(currentPlayerDetails[0])
     allDetails = enemyDetails
     allDetails.append(currentPlayerDetails)
-    print(LOS("110", "111"))
+    print(getWeaponsStatus(110, allDetails))
