@@ -43,9 +43,6 @@ def switchWeapon(amount):
     if post(port, "/api/player/actions", {'type': 'switch-weapon','amount': amount}) != 201:
         raise ValueError('Switch weapon command was not executed')
 
-def turnAngle(angle):
-    if post(port, "/api/player/turn", {'target_angle': angle}) != 200:
-        raise ValueError('Turn angle command was not executed')
 
 if __name__ == "__main__":
     print(forward(10))
