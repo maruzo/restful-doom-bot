@@ -41,13 +41,26 @@ def getEnemyDetails(port, currentPlayerID):
 
     return returnData
 
+def getCoordsByID(ID, enemyDetails):
+    for i in range(len(enemyDetails)):
+        if(enemyDetails[i][0] == ID):
+            return(enemyDetails[i][3])
+
+def getHealthByID(ID, enemyDetails):
+    for i in range(len(enemyDetails)):
+        if(enemyDetails[i][0] == ID):
+            return(enemyDetails[i][1])
+        
+def getAngleByID(ID, enemyDetails):
+    for i in range(len(enemyDetails)):
+        if(enemyDetails[i][0] == ID):
+            return(enemyDetails[i][2])
+
 if __name__ == "__main__":
     currentPlayerDetails = getPlayerDetails("6001")
-    enemyDetails = getEnemyDetails("6001", currentPlayerDetails[0])
-
-    print(currentPlayerDetails)
-    print(enemyDetails)
+    print(getAngleByID(111, getEnemyDetails("6001", currentPlayerDetails[0])))
 
 #format of output
 #currentPlayerDetails goes [id, health, angle [x-coord, y-coord]]
 #enemyDetails goes [[id, health, angle [x-coord, y-coord]...]
+#put the IDs in the wrapper function as ints 
