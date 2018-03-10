@@ -135,10 +135,20 @@ def getCurrentAmmoDetails(ID, details):
 
 #-----------------------------------------------------------------------------------------
 
+#line of sight
+
+def LOS(id1, id2):
+    data = get("/api/world/los/"+id1+"/"+id2+"")
+    return data["los"];
+
+
+
+
+#-----------------------------------------------------------------------------------------
 
 if __name__ == "__main__":
     currentPlayerDetails = getPlayerDetails()
     enemyDetails = getEnemyDetails(currentPlayerDetails[0])
     allDetails = enemyDetails
     allDetails.append(currentPlayerDetails)
-    print(getCurrentAmmoDetails(110, allDetails))
+    print(LOS("110", "111"))
