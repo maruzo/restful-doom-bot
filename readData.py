@@ -6,8 +6,8 @@ from request import get
 #preliminary functions that read the json and formats it into a list
 
 #format of output
-#currentPlayerDetails goes [id, health, angle [x-coord, y-coord]]
-#enemyDetails goes [[id, health, angle [x-coord, y-coord]...]
+#currentPlayerDetails goes [id, health, angle [x-coord, y-coord], currentWeaponID]
+#enemyDetails goes [[id, health, angle [x-coord, y-coord], currentWeaponID]
 #put the IDs in the wrapper function as ints
 
 
@@ -27,7 +27,7 @@ def getPlayerDetails():
          returnData.append(data["health"])
     returnData.append(data["angle"])
     returnData.append(xy)
-
+    returnData.append(data["weapon"])
 
 
     return returnData
@@ -48,6 +48,7 @@ def getEnemyDetails(currentPlayerID):
             eachEnemyXY.append(data[i]["position"]["x"])
             eachEnemyXY.append(data[i]["position"]["y"])
             eachEnemy.append(eachEnemyXY)
+            eachEnemy.append(data["weapon"])
             returnData.append(eachEnemy)
 
     return returnData
@@ -55,31 +56,31 @@ def getEnemyDetails(currentPlayerID):
 #nicer functions that return the said data by an ID
 
 def getCoordsByID(ID, details):
-    for i in range(len(enemyDetails)):
-        if(enemyDetails[i][0] == ID):
+    for i in range(len(details)):
+        if(details[i][0] == ID):
             return(details[i][3])
 
 def getHealthByID(ID, details):
-    for i in range(len(enemyDetails)):
-        if(enemyDetails[i][0] == ID):
-            return(deetails[i][1])
+    for i in range(len(details)):
+        if(details[i][0] == ID):
+            return(details[i][1])
 
 def getAngleByID(ID, details):
-    for i in range(len(enemyDetails)):
-        if(enemyDetails[i][0] == ID):
+    for i in range(len(details)):
+        if(details[i][0] == ID):
             return(details[i][2])
 
 #-----------------------------------------------------------------------------------------
-# Functions that return the nearest health/ammo pack
+# Function that returns the current weapon ID
 
-def getNearestHealthPack(ID):
-    pass
-def getNearestAmmoPack(ID):
-    pass
-def getNearestArmour(ID):
-    pass
-
+def getCurrentWeaponID(ID, details):
+    for i in range(len(details)):
+        if(details[i][0] == ID):
+            return(details[i][3])
+    
 #-----------------------------------------------------------------------------------------
+
+
 if __name__ == "__main__":
     currentPlayerDetails = getPlayerDetails("6001")
     enemyDetails = getEnemyDetails("6001", currentPlayerDetails[0])
