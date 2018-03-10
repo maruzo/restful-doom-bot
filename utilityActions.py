@@ -2,13 +2,16 @@
 import math
 import actions
 import readData
+import time
 
 
 def turnAbsAngle(_angle):
 	angle = readData.getPlayerDetails()[2]
-	while (abs(_angle-angle) > 5):
+	while (abs(_angle-angle) >= 2):
+		angle = readData.getPlayerDetails()[2]
 		turn = _angle - angle
 		#turn the other way
+<<<<<<< HEAD
 		if (abs(_angle-angle) > 180):
 			if (turn > 0): #if positive
 				actions.turnRight(turn*1.5)
@@ -37,6 +40,30 @@ def currentAmmo():
 def mapWeaponToAmmoType(weaponNo):
 	return [-1,0,1,0,3,2,2][weaponNo]
 	
+=======
+		if (abs(_angle-angle) != 0):
+			if (abs(_angle-angle) > 180):
+				if (turn > 0): #if positive
+					actions.turnRight(turn*1.2)
+				else:
+					actions.turnLeft(turn*-1.2)
+			else:#turn the right way
+				if (turn > 0):
+					actions.turnLeft(turn*1.2)
+				else:
+					actions.turnRight(turn*-1.2)
+		waitUntilTurnFinished()
+
+def waitUntilTurnFinished():
+	angle = readData.getPlayerDetails()[2]
+	lastAngle = -1
+	while (abs(angle-lastAngle) > 2):
+		angle = readData.getPlayerDetails()[2]
+		lastAngle = angle
+		time.sleep(10)
+
+
+>>>>>>> 4f73c7f3207ab430f9f848b7664c48552e01a8b6
 '''
 def findLowestHPEnemy(enemyList, range):
 	lowestHP=9999
@@ -49,7 +76,7 @@ def findLowestHPEnemy(enemyList, range):
 
 	return lowestEnemy
 
-def findClosestEnemy(enemyList):
+def findClosestObje(enemyList):
 	closestDist=distanceToEnemy(enemyID[0])
 	closestEnemy=enemyID[0]
 	for enemyID in enemyList:
@@ -84,7 +111,7 @@ def listSeenEnemies():
 
 '''
 if __name__ == "__main__":
-    turnAbsAngle(150)
+    turnAbsAngle(359)
 
 #redundant function, replaced by listSeenEnemies
 
