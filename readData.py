@@ -135,7 +135,7 @@ def getCurrentAmmoDetails(ID, details):
 
 #-----------------------------------------------------------------------------------------
 
-#line of sight
+#line of sight returns boolean
 
 def LOS(id1, id2):
     data = get("/api/world/los/"+id1+"/"+id2+"")

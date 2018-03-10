@@ -93,7 +93,7 @@ def findLowestHPEnemy(_range):
 	lowestEnemy=-1#negative means no enemies in range
 	for enemyID in enemyList:
 		dist=readData.getObjectDetails(enemyID)
-		if (dist <= _range && enemyID[1]<lowestHP):
+		if (dist <= _range and enemyID[1] < lowestHP):
 			lowestEnemy = enemyID
 			lowestHP = enemyID[1]
 
@@ -124,7 +124,7 @@ def listSeenEnemies():
 	seenEnemyList = []
 	currentPlayerID = readData.getPlayerDetails()[0]
 	for enemies in getEnemyDetails(currentPlayerID):
-		if LOS(currentPlayerID, enemies[0]):
+		if readData.LOS(currentPlayerID, enemies[0]):
 			seenEnemyList.append(enemies[0])
 
 	return seenEnemyList
