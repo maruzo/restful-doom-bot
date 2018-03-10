@@ -14,6 +14,7 @@ def getPlayerDetails(port):
         returnData.append(0)
     else:
          returnData.append(data["health"])
+    returnData.append(data["angle"])
     returnData.append(xy)
     
 
@@ -32,6 +33,7 @@ def getEnemyDetails(port, currentPlayerID):
                 eachEnemy.append(0)
             else:
                 eachEnemy.append(data[i]["health"])
+            eachEnemy.append(data[i]["angle"])
             eachEnemyXY.append(data[i]["position"]["x"])
             eachEnemyXY.append(data[i]["position"]["y"])
             eachEnemy.append(eachEnemyXY)
@@ -47,5 +49,5 @@ if __name__ == "__main__":
     print(enemyDetails)
 
 #format of output
-#currentPlayerDetails goes [id, health, [x-coord, y-coord]]
-#enemyDetails goes [[id, health, [x-coord, y-coord]...]
+#currentPlayerDetails goes [id, health, angle [x-coord, y-coord]]
+#enemyDetails goes [[id, health, angle [x-coord, y-coord]...]
