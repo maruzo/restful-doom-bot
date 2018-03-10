@@ -24,6 +24,8 @@ def turnAbsAngle(_angle):
 					actions.turnRight(turn*-1.2)
 		waitUntilTurnFinished()
 
+
+		
 def waitUntilTurnFinished():
 	angle = readData.getPlayerDetails()[2]
 	lastAngle = -1
@@ -32,6 +34,23 @@ def waitUntilTurnFinished():
 		lastAngle = angle
 		time.sleep(10)
 
+
+def switchAndShoot(a):
+	if(currentAmmo()>0):
+		actions.shoot(a)
+	else:
+		#switch to a weapon with ammo
+		
+def currentAmmo():
+	ammoType = mapWeaponToAmmoType(readData.currentWeapon())
+	if(ammoType>0):
+		return readData.getAmmo(ammoType)
+	else:
+		return 9999 #fists or chainsaw dont require ammo
+		
+def mapWeaponToAmmoType(weaponNo):
+	return [-1,0,1,0,3,2,2][weaponNo]
+		
 
 '''
 def findLowestHPEnemy(enemyList, range):
