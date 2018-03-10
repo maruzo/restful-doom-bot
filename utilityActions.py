@@ -4,10 +4,10 @@ import actions
 import readData
 import time
 
-
+constant_errro = 10
 def turnAbsAngle(_angle):
 	angle = readData.getPlayerDetails()[2]
-	while (abs(_angle-angle) >= 2):
+	while (abs(_angle-angle) >= constant_errro):
 		angle = readData.getPlayerDetails()[2]
 		turn = _angle - angle
 		#turn the other way
@@ -27,7 +27,7 @@ def turnAbsAngle(_angle):
 def waitUntilTurnFinished():
 	angle = readData.getPlayerDetails()[2]
 	lastAngle = -1
-	while (abs(angle-lastAngle) > 2):
+	while (abs(angle-lastAngle) >= constant_errro):
 		angle = readData.getPlayerDetails()[2]
 		lastAngle = angle
 		time.sleep(10)
@@ -80,7 +80,7 @@ def listSeenEnemies():
 
 '''
 if __name__ == "__main__":
-    turnAbsAngle(359)
+    turnAbsAngle(50)
 
 #redundant function, replaced by listSeenEnemies
 
