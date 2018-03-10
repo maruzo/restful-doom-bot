@@ -8,10 +8,10 @@ from request import get
 #format of output
 #currentPlayerDetails goes [id, health, angle [x-coord, y-coord]]
 #enemyDetails goes [[id, health, angle [x-coord, y-coord]...]
-#put the IDs in the wrapper function as ints 
+#put the IDs in the wrapper function as ints
 
 
-def getPlayerDetails(port):
+def getPlayerDetails():
 
     returnData = []
     xy = []
@@ -63,7 +63,7 @@ def getHealthByID(ID, details):
     for i in range(len(enemyDetails)):
         if(enemyDetails[i][0] == ID):
             return(deetails[i][1])
-        
+
 def getAngleByID(ID, details):
     for i in range(len(enemyDetails)):
         if(enemyDetails[i][0] == ID):
@@ -86,4 +86,3 @@ if __name__ == "__main__":
     allDetails = enemyDetails
     allDetails.append(currentPlayerDetails)
     print(getAngleByID(110, allDetails))
-
