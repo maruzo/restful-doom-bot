@@ -1,10 +1,5 @@
 from request import get
 
-<<<<<<< HEAD
-
-def getPlayerDetails():
-=======
-port = 6001
 
 #-----------------------------------------------------------------------------------------
 
@@ -17,7 +12,7 @@ port = 6001
 
 
 def getPlayerDetails(port):
->>>>>>> 27db4809ad52d19adaec66324ab20eb768db1407
+
     returnData = []
     xy = []
     data = get("/api/player")
