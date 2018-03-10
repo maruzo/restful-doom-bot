@@ -18,10 +18,17 @@ enemy cords-plr coord
 
 seenEnemyList=listSeenEnemies()
 if (seenEnemyList!=[]):
-	findClosestEnemy(seenEnemyList)
-
-faceEnemy(i)
-shoot()
+	closesEnemy=findClosestEnemy(seenEnemyList)
+	closesDist=distanceToEnemy(closesEnemy)
+	closeLowHPenemy = findLowestHPEnemy(seenEnemyList, closesDist*1.5)
+	faceEnemy(closeLowHPenemy)
+	shoot()
+	#send shoot action
+	#if out of ammo, switch weapon
+else:
+	#search for enemies
+	walkFwrd()
+	
 
 def findLowestHPEnemy(enemyList, range):
 	lowestHP=9999
@@ -67,6 +74,10 @@ def listSeenEnemies():
 			
 	return canSee
 	
+	
+	
+	
+	
 '''#redundant
 def canSeeEnemy():
 	canSee = False
@@ -92,7 +103,7 @@ def enemyY(i)
 enemyHP(i)
 
 def absTurn(absAngle):
-	#
+walkFwrd()
 
 def shoot():
 	#send shoot action
