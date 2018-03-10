@@ -51,7 +51,7 @@ def currentAmmo():
 def mapWeaponToAmmoType(weaponNo):
 	return [-1,0,1,0,3,2,2][weaponNo]
 		
->>>>>>> 4f73c7f3207ab430f9f848b7664c48552e01a8b6
+
 '''
 def findLowestHPEnemy(enemyList, range):
 	lowestHP=9999
