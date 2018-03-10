@@ -19,6 +19,24 @@ def turnAbsAngle(_angle):
 				actions.turnLeft(turn*1.5)
 			else:
 				actions.turnRight(turn*-1.5)
+				
+				
+def switchAndShoot(a):
+	if(currentAmmo()>0):
+		actions.shoot(a)
+	else:
+		#switch to a weapon with ammo
+		
+def currentAmmo():
+	ammoType = mapWeaponToAmmoType(readData.currentWeapon())
+	if(ammoType>0):
+		return readData.getAmmo(ammoType)
+	else:
+		return 9999 #fists or chainsaw dont require ammo
+		
+def mapWeaponToAmmoType(weaponNo):
+	return [-1,0,1,0,3,2,2][weaponNo]
+	
 '''
 def findLowestHPEnemy(enemyList, range):
 	lowestHP=9999
