@@ -13,23 +13,23 @@ state = FIGHT
 enoughHP = True
 enoughAmmo = True
 
-while(): #main loop
-	
+while(True): #main loop
+
 	plrHP = currentPlayerDetails
 	useableAmmo = 3               ####place holder####
-	
+
 	if(enoughHP and plrHP<30):enoughHP = False
 	if(!enoughHP and plrHP>50):enoughHP = True
 	if(enoughAmmo and useableAmmo<=2):enoughAmmo = False
 	if(!enoughAmmo and useableAmmo>4):enoughAmmo = True
-	
+
 	if(!enoughHP):
 		state=HEALTH_SEARCH #health search takes priority over ammo search
 	else if(!enoughAmmo):
 		state=AMMO_SEARCH
 	else:
 		state=FIGHT
-	
+
 	if (state==FIGHT):
 		seenEnemyList=utilityActions.listSeenEnemies()
 		if (seenEnemyList!=[]):
@@ -49,6 +49,3 @@ while(): #main loop
 		#AMMO_SEARCH
 	if(state==ENEMY_SEARCH):#not an else if, as this state could have been assigned during the begging IF statement
 		#ENEMY_SEARCH
-		
-
-	

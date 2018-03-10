@@ -75,9 +75,9 @@ def switchAndShoot(a):
 		return#switch to a weapon with ammo
 
 def currentAmmo():
-	ammoType = mapWeaponToAmmoType(readData.currentWeapon())
+	ammoType = mapWeaponToAmmoType(readData.getPlayerDetails()[4])
 	if(ammoType>0):
-		return readData.getAmmo(ammoType)
+		return readData.getPlayerDetails[5][ammoType]
 	else:
 		return 9999 #fists or chainsaw dont require ammo
 
@@ -85,52 +85,50 @@ def mapWeaponToAmmoType(weaponNo):
 	return [-1,0,1,0,3,2,2][weaponNo]
 
 
-'''
-def findLowestHPEnemy(enemyList, range):
+
+def findLowestHPEnemy(_range):
+	enemyList = readData.getEnemyDetails()
+
 	lowestHP=9999
 	lowestEnemy=-1#negative means no enemies in range
 	for enemyID in enemyList:
-		dist=distanceToEnemy(enemyID)
-		if (dist<=range && enemyHP[enemyID]<lowestHP):
-			lowestEnemy=enemyID
-			lowestHP=enemyHP[enemyID]
+		dist=readData.getObjectDetails(enemyID)
+		if (dist <= _range && enemyID[1]<lowestHP):
+			lowestEnemy = enemyID
+			lowestHP = enemyID[1]
 
 	return lowestEnemy
 
-def findClosestObje(enemyList):
-	closestDist=distanceToEnemy(enemyID[0])
-	closestEnemy=enemyID[0]
-	for enemyID in enemyList:
-		dist=distanceToEnemy(enemyID)
+def findClosestObject():
+	objects = readData.getObjectsDetails(readData.getPlayerDetails()[0])
+	closestDist = objects[0][3]
+	closestObject = objects[0][0]
+	for obj in objects:
+		dist=obj[3]
 		if (dist<closestDist):
 			closestDist=dist
-			closestEnemy=enemyID[0]
+			closestObject=obj[0]
 
 	return closestEnemy
 
+def faceObject(objectID):
+	objectDetails = readData.getObjectDetails(objectID)
+	playerDetails = readData.getPlayerDetails()
 
-
-def distanceToEnemy(enemyID):
-	dx=enemyX(enemyID)-getPlrX()
-	dy=enemyY(enemyID)-getPlrY()
-	return math.sqrt(dx*dx+dy*dy)
-
-def faceEnemy(enemyID):
-	dx=enemyX(enemyID)-getPlrX()
-	dy=enemyY(enemyID)-getPlrY()
+	dx=objectDetails[2][0] - playerDetails[3][0] #get Xs
+	dy=objectDetails[2][1] - playerDetails[3][1] #getYs
 	absAngle=math.atan2(dy,dx)
-	absTurn(absAngle)
+	turnAbsAngle(absAngle)
 
 def listSeenEnemies():
 	seenEnemyList = []
-	for enemyID in enemyIDs:
-		if LOS(prlID,enemyID):
-			canSee=True
-			break
+	currentPlayerID = readData.getPlayerDetails()[0]
+	for enemies in getEnemyDetails(currentPlayerID):
+		if LOS(currentPlayerID, enemies[0]):
+			seenEnemyList.append(enemies[0])
 
-	return canSee
+	return seenEnemyList
 
-'''
 if __name__ == "__main__":
     turnAbsAngle(10)
 
