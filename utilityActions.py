@@ -1,33 +1,9 @@
 
 import math
-#import json
-
-'''
-get player pos
-find closest/lowest HP enemy
-get enemy coords
-point
-shoot
+import actions
+import readData
 
 
-
-enemy cords-plr coord
-'''
-
-#public enemyIDs[]
-
-seenEnemyList=listSeenEnemies()
-if (seenEnemyList!=[]):
-	closesEnemy=findClosestEnemy(seenEnemyList)
-	closesDist=distanceToEnemy(closesEnemy)
-	closeLowHPenemy = findLowestHPEnemy(seenEnemyList, closesDist*1.5)
-	faceEnemy(closeLowHPenemy)
-	shoot()
-	#send shoot action
-	#if out of ammo, switch weapon
-else:
-	#search for enemies
-	walkFwrd()
 	
 
 def findLowestHPEnemy(enemyList, range):
@@ -75,10 +51,8 @@ def listSeenEnemies():
 	return canSee
 	
 	
-	
-	
-	
-'''#redundant
+#redundant function, replaced by listSeenEnemies
+'''
 def canSeeEnemy():
 	canSee = False
 	for enemyID in enemyIDs:
@@ -87,25 +61,4 @@ def canSeeEnemy():
 			break
 			
 	return canSee
-'''
-
-
-'''
-
-def query():
-	#GET info and store
-	
-def getPlrX():
-def getPlrY():
-
-def enemyX(i)
-def enemyY(i)
-enemyHP(i)
-
-def absTurn(absAngle):
-walkFwrd()
-
-def shoot():
-	#send shoot action
-	#if out of ammo, switch weapon
 '''
