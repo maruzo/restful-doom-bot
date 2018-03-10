@@ -69,13 +69,15 @@ def turnAbsAngle(_angle):
 			actions.turnRight(3)
 
 def switchAndShoot(a):
-	if(currentAmmo()>0):
-		actions.shoot(a)
-	else:
-		for i in range(1, 6):
-			if mapWeaponToAmmoType(i)
-		action.switchWeapon()#switch to a weapon with ammo
-		#DO THIS
+	if(currentAmmo()==0 || readData.getPlayerDetails()[5]==0): # if no ammo in held gun or fists are equipped, switch to somethin else
+		plrDetails = readData.getPlayerDetails()
+		hasWeapon=[True]+readData.getWeaponsStatus(plrDetails[0],plrDetails) #add [True] for fists
+		for i in range(6, -1, -1):#start checking from back (6) and end on fists (0) if no ammo
+			hasAmmo = readData.getCurrentAmmoDetails()[4][mapWeaponToAmmoType(i)]
+			if (hasAmmo && hasWeapon[i]):
+				break
+		action.switchWeapon(i)#switch to a weapon with ammo
+	actions.shoot(a)
 
 def currentAmmo():
 	ammoType = mapWeaponToAmmoType(readData.getPlayerDetails()[4])
@@ -119,7 +121,7 @@ def faceObject(objectID):
 	playerDetails = readData.getPlayerDetails()
 
 	dx=objectDetails[2][0] - playerDetails[3][0] #get Xs
-	dy=objectDetails[2][1] - playerDetails[3][1] #getYs
+	dy=objectDetails[2][1] - playerDetails[3][1] #get Ys
 	absAngle=math.atan2(dy,dx)
 	turnAbsAngle(absAngle)
 
