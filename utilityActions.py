@@ -4,6 +4,7 @@ import actions
 import readData
 import time
 
+'''
 constant_errro = 10
 def turnAbsAngle(_angle):
 	angle = readData.getPlayerDetails()[2]
@@ -14,43 +15,75 @@ def turnAbsAngle(_angle):
 		if (abs(_angle-angle) != 0):
 			if (abs(_angle-angle) > 180):
 				if (turn > 0): #if positive
-					actions.turnRight(turn*1.2)
+					actions.turnRight(3)
 				else:
-					actions.turnLeft(turn*-1.2)
+					actions.turnLeft(3)
 			else:#turn the right way
 				if (turn > 0):
-					actions.turnLeft(turn*1.2)
+					actions.turnLeft(3)
 				else:
-					actions.turnRight(turn*-1.2)
-		waitUntilTurnFinished()
+					actions.turnRight(3)
+		time.sleep(10)
 
 
-		
+
+
 def waitUntilTurnFinished():
 	angle = readData.getPlayerDetails()[2]
 	lastAngle = -1
-	while (abs(angle-lastAngle) >= constant_errro):
+	while (abs(angle-lastAngle) != 0):
 		angle = readData.getPlayerDetails()[2]
 		lastAngle = angle
 		time.sleep(10)
+'''
 
+'''def turnAbsAngle(_angle):
+	angle = readData.getPlayerDetails()[2]
+	direction = abs(_angle-angle)>180
+	while (abs(_angle-angle) >= 5):
+		angle = readData.getPlayerDetails()[2]
+		if(direction):
+			actions.turnLeft(3)
+		else:
+			actions.turnRight(3)
+'''
+
+def turnAbsAngle(_angle):
+	angle = readData.getPlayerDetails()[2]
+	turn = _angle - angle
+	if (abs(_angle-angle) > 180):
+		if (turn > 0): #if positive
+			left = False;
+		else:
+			left = True;
+	else:#turn the right way
+		if (turn > 0):
+			left = True;
+		else:
+			left = False;
+	while (abs(_angle-angle) >= 5):
+		angle = readData.getPlayerDetails()[2]
+		if(left):
+			actions.turnLeft(3)
+		else:
+			actions.turnRight(3)
 
 def switchAndShoot(a):
 	if(currentAmmo()>0):
 		actions.shoot(a)
 	else:
-		#switch to a weapon with ammo
-		
+		return#switch to a weapon with ammo
+
 def currentAmmo():
 	ammoType = mapWeaponToAmmoType(readData.currentWeapon())
 	if(ammoType>0):
 		return readData.getAmmo(ammoType)
 	else:
 		return 9999 #fists or chainsaw dont require ammo
-		
+
 def mapWeaponToAmmoType(weaponNo):
 	return [-1,0,1,0,3,2,2][weaponNo]
-		
+
 
 '''
 def findLowestHPEnemy(enemyList, range):
@@ -99,7 +132,7 @@ def listSeenEnemies():
 
 '''
 if __name__ == "__main__":
-    turnAbsAngle(50)
+    turnAbsAngle(10)
 
 #redundant function, replaced by listSeenEnemies
 
