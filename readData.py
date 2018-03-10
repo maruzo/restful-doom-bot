@@ -1,6 +1,17 @@
 from request import get
 
 port = 6001
+
+#-----------------------------------------------------------------------------------------
+
+#preliminary functions that read the json and formats it into a list
+
+#format of output
+#currentPlayerDetails goes [id, health, angle [x-coord, y-coord]]
+#enemyDetails goes [[id, health, angle [x-coord, y-coord]...]
+#put the IDs in the wrapper function as ints 
+
+
 def getPlayerDetails(port):
     returnData = []
     xy = []
@@ -40,27 +51,39 @@ def getEnemyDetails(port, currentPlayerID):
             returnData.append(eachEnemy)
 
     return returnData
+#-----------------------------------------------------------------------------------------
+#nicer functions that return the said data by an ID
 
-def getCoordsByID(ID, enemyDetails):
+def getCoordsByID(ID, details):
     for i in range(len(enemyDetails)):
         if(enemyDetails[i][0] == ID):
-            return(enemyDetails[i][3])
+            return(details[i][3])
 
-def getHealthByID(ID, enemyDetails):
+def getHealthByID(ID, details):
     for i in range(len(enemyDetails)):
         if(enemyDetails[i][0] == ID):
-            return(enemyDetails[i][1])
+            return(deetails[i][1])
         
-def getAngleByID(ID, enemyDetails):
+def getAngleByID(ID, details):
     for i in range(len(enemyDetails)):
         if(enemyDetails[i][0] == ID):
-            return(enemyDetails[i][2])
+            return(details[i][2])
 
+#-----------------------------------------------------------------------------------------
+# Functions that return the nearest health/ammo pack
+
+def getNearestHealthPack(ID):
+    pass
+def getNearestAmmoPack(ID):
+    pass
+def getNearestArmour(ID):
+    pass
+
+#-----------------------------------------------------------------------------------------
 if __name__ == "__main__":
     currentPlayerDetails = getPlayerDetails("6001")
-    print(getAngleByID(111, getEnemyDetails("6001", currentPlayerDetails[0])))
+    enemyDetails = getEnemyDetails("6001", currentPlayerDetails[0])
+    allDetails = enemyDetails
+    allDetails.append(currentPlayerDetails)
+    print(getAngleByID(110, allDetails))
 
-#format of output
-#currentPlayerDetails goes [id, health, angle [x-coord, y-coord]]
-#enemyDetails goes [[id, health, angle [x-coord, y-coord]...]
-#put the IDs in the wrapper function as ints 
