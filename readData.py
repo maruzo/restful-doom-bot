@@ -6,8 +6,8 @@ from request import get
 #preliminary functions that read the json and formats it into a list
 
 #format of output
-#currentPlayerDetails goes [id, health, angle [x-coord, y-coord], currentWeaponID]
-#enemyDetails goes [[id, health, angle [x-coord, y-coord], currentWeaponID]
+#currentPlayerDetails goes [id, health, angle [x-coord, y-coord], currentWeaponID, [ammo]]
+#enemyDetails goes [[id, health, angle [x-coord, y-coord], currentWeaponID, [ammo]]
 #put the IDs in the wrapper function as ints
 
 
@@ -15,6 +15,7 @@ def getPlayerDetails():
 
     returnData = []
     xy = []
+    ammo = []
     data = get("/api/player")
 
     xy.append(data["position"]["x"])
@@ -28,7 +29,7 @@ def getPlayerDetails():
     returnData.append(data["angle"])
     returnData.append(xy)
     returnData.append(data["weapon"])
-
+    returnData.append(list(data["ammo"].values()))
 
     return returnData
 def getEnemyDetails(currentPlayerID):
@@ -48,7 +49,9 @@ def getEnemyDetails(currentPlayerID):
             eachEnemyXY.append(data[i]["position"]["x"])
             eachEnemyXY.append(data[i]["position"]["y"])
             eachEnemy.append(eachEnemyXY)
-            eachEnemy.append(data["weapon"])
+            eachEnemy.append(data[i]["weapon"])
+            eachEnemy.append(data[i]["ammo"])
+            eachEnemy.append(list(data[i]["ammo"].values()))
             returnData.append(eachEnemy)
 
     return returnData
@@ -76,14 +79,21 @@ def getAngleByID(ID, details):
 def getCurrentWeaponID(ID, details):
     for i in range(len(details)):
         if(details[i][0] == ID):
-            return(details[i][3])
+            return(details[i][4])
     
+#-----------------------------------------------------------------------------------------
+
+def getCurrentAmmoDetails(ID, details):
+    for i in range(len(details)):
+        if(details[i][0] == ID):
+            return(details[i][5])
+
 #-----------------------------------------------------------------------------------------
 
 
 if __name__ == "__main__":
-    currentPlayerDetails = getPlayerDetails("6001")
-    enemyDetails = getEnemyDetails("6001", currentPlayerDetails[0])
+    currentPlayerDetails = getPlayerDetails()
+    enemyDetails = getEnemyDetails(currentPlayerDetails[0])
     allDetails = enemyDetails
     allDetails.append(currentPlayerDetails)
-    print(getAngleByID(110, allDetails))
+    print(getCurrentAmmoDetails(110, allDetails))
