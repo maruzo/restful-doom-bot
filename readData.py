@@ -1,7 +1,23 @@
 from request import get
 
+<<<<<<< HEAD
 
 def getPlayerDetails():
+=======
+port = 6001
+
+#-----------------------------------------------------------------------------------------
+
+#preliminary functions that read the json and formats it into a list
+
+#format of output
+#currentPlayerDetails goes [id, health, angle [x-coord, y-coord]]
+#enemyDetails goes [[id, health, angle [x-coord, y-coord]...]
+#put the IDs in the wrapper function as ints 
+
+
+def getPlayerDetails(port):
+>>>>>>> 27db4809ad52d19adaec66324ab20eb768db1407
     returnData = []
     xy = []
     data = get("/api/player")
@@ -40,14 +56,39 @@ def getEnemyDetails(currentPlayerID):
             returnData.append(eachEnemy)
 
     return returnData
+#-----------------------------------------------------------------------------------------
+#nicer functions that return the said data by an ID
 
+def getCoordsByID(ID, details):
+    for i in range(len(enemyDetails)):
+        if(enemyDetails[i][0] == ID):
+            return(details[i][3])
+
+def getHealthByID(ID, details):
+    for i in range(len(enemyDetails)):
+        if(enemyDetails[i][0] == ID):
+            return(deetails[i][1])
+        
+def getAngleByID(ID, details):
+    for i in range(len(enemyDetails)):
+        if(enemyDetails[i][0] == ID):
+            return(details[i][2])
+
+#-----------------------------------------------------------------------------------------
+# Functions that return the nearest health/ammo pack
+
+def getNearestHealthPack(ID):
+    pass
+def getNearestAmmoPack(ID):
+    pass
+def getNearestArmour(ID):
+    pass
+
+#-----------------------------------------------------------------------------------------
 if __name__ == "__main__":
     currentPlayerDetails = getPlayerDetails("6001")
     enemyDetails = getEnemyDetails("6001", currentPlayerDetails[0])
+    allDetails = enemyDetails
+    allDetails.append(currentPlayerDetails)
+    print(getAngleByID(110, allDetails))
 
-    print(currentPlayerDetails)
-    print(enemyDetails)
-
-#format of output
-#currentPlayerDetails goes [id, health, angle [x-coord, y-coord]]
-#enemyDetails goes [[id, health, angle [x-coord, y-coord]...]
