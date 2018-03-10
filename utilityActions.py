@@ -72,7 +72,9 @@ def switchAndShoot(a):
 	if(currentAmmo()>0):
 		actions.shoot(a)
 	else:
-		return#switch to a weapon with ammo
+		for i in range(1, 6):
+			if mapWeaponToAmmoType(i)
+		action.switchWeapon()#switch to a weapon with ammo
 		#DO THIS
 
 def currentAmmo():

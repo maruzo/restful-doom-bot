@@ -18,14 +18,18 @@ while(True): #main loop
 	plrHP = currentPlayerDetails
 	useableAmmo = 3               ####place holder####
 
-	if(enoughHP and plrHP<30):enoughHP = False
-	if(!enoughHP and plrHP>50):enoughHP = True
-	if(enoughAmmo and useableAmmo<=2):enoughAmmo = False
-	if(!enoughAmmo and useableAmmo>4):enoughAmmo = True
+	if (enoughHP and plrHP<30):
+		enoughHP = False
+	elif (not enoughHP and plrHP>50):
+		enoughHP = True
+	elif(enoughAmmo and useableAmmo<=2):
+		enoughAmmo = False
+	elif(not enoughAmmo and useableAmmo>4):
+		enoughAmmo = True
 
-	if(!enoughHP):
+	if (not enoughHP):
 		state=HEALTH_SEARCH #health search takes priority over ammo search
-	else if(!enoughAmmo):
+	elif (not enoughAmmo):
 		state=AMMO_SEARCH
 	else:
 		state=FIGHT
@@ -43,9 +47,9 @@ while(True): #main loop
 		else:
 			#no one in line of sight, search for enemies
 			state = ENEMY_SEARCH
-	else if (state==HEALTH_SEARCH):
-		#HEALTH_SEARCH
-	else if (state==AMMO_SEARCH):
+	elif (state==HEALTH_SEARCH):
+		return
+	elif (state==AMMO_SEARCH):
 		#AMMO_SEARCH
 	if(state==ENEMY_SEARCH):#not an else if, as this state could have been assigned during the begging IF statement
 		#ENEMY_SEARCH
