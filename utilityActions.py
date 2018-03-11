@@ -14,14 +14,14 @@ def turnAbsAngle(_angle):
 		if (abs(_angle-angle) != 0):
 			if (abs(_angle-angle) > 180):
 				if (turn > 0): #if positive
-					actions.turnRight(3)
+					actions.turnRight(6)
 				else:
-					actions.turnLeft(3)
+					actions.turnLeft(6)
 			else:#turn the right way
 				if (turn > 0):
-					actions.turnLeft(3)
+					actions.turnLeft(6)
 				else:
-					actions.turnRight(3)
+					actions.turnRight(6)
 		time.sleep(10)
 def waitUntilTurnFinished():
 	angle = readData.getPlayerDetails()[2]
