@@ -1,14 +1,25 @@
-import actions, random
+import actions, random, readData
 
 
-def attack(xy, direction = None):
-    x = xy[0]
-    y = xy[1]
-    if direction is None:
-        direction = random.randint(0,1)
+def attack(objectID, currentPlayerID, futureDirection = None, previousDirection = None):
+    x = readData.getObjectDetails(objectID)[3][0]
+    y = readData.getObjectDetails(objectID)[3][1]
+    los = readData.LOS(currentPlayerID, objectID)
     
-        
-    if direction == 0:
+    if previousDirection is None:
+        previousDirection = random.randint(0,1)
+    
+    if futureDirection is None:
+        futureDirection = random.randint(0,1)
+
+
+    if (los):
+        if(previousDirection == 0):
+            futureDirection = 1
+        else:
+            futureDirection = 0
+            
+    if futureDirection == 0:
          actions.strafeLeft(10)
          actions.forward(10)
     else:
@@ -17,8 +28,6 @@ def attack(xy, direction = None):
         
     return direction
 
-if __name__ == "__main__":
-    attack([0,1])
 
 
 
