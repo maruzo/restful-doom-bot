@@ -7,6 +7,7 @@ import json
 
 port = "6004"
 ip = "http://192.168.44.103:"
+#ip = "http://127.0.0.1:"
 
 def get(url_extension):
     url = ip + port
