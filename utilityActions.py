@@ -91,6 +91,16 @@ def currentAmmo():
 	else:
 		return 9999 #fists or chainsaw dont require ammo
 
+		
+def useableAmmo():
+	total=0
+	currentPlayer = readData.getPlayerDetails()
+	hasWeapon=[True]+currentPlayer[6]
+	for i in range(1,7):
+		if (hasWeapon[i]):
+			total += currentPlayer[5][mapWeaponToAmmoType(i)]
+	return total	
+	
 def mapWeaponToAmmoType(weaponNo):
 	return [-1,0,1,0,3,2,2,-1][weaponNo]
 
@@ -120,6 +130,15 @@ def findClosestObject(objectList):
 			closestObject=obj[0]
 
 	return closestObject
+	
+def findClosestHealth()
+	plrId = readData.getPlayerDetails()[0]
+	objList = getObjectsDetails(plrId)
+	healthObj=[]
+	for obj in objList:
+		if("health" in obj[1].lower()):
+			healthObj+=obj
+	return findClosestObject(healthObj)
 
 def faceObject(objectID):
 	objectDetails = readData.getObjectDetails(objectID)
