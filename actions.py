@@ -2,8 +2,9 @@ from request import post
 
 repeat = 2
 
-def shoot(amount):
+def doAction(name,amount):
     for i in range(repeat):
+<<<<<<< HEAD
         if post("/api/player/actions", {'type': 'shoot','amount': amount}) != 201:
             print('Shoot command was not executed')
             continue
@@ -67,6 +68,22 @@ def switchWeapon(amount):
             continue
         break
 
+=======
+        if post("/api/player/actions", {'type': name,'amount': amount}) != 201:
+            print(name+' command was not executed')
+        else:
+            break
+
+def shoot(amount):doAction("shoot",amount)
+def forward(amount):doAction("forward",amount)
+def backward(amount):doAction("backward",amount)
+def turnLeft(amount):doAction("turn-left",amount)
+def turnRight(amount):doAction("turn-right",amount)
+def use(amount):doAction("use",amount)
+def strafeLeft(amount):doAction("strafe-left",amount)
+def strafeRight(amount):doAction("strafe-right",amount)
+def switchWeapon(amount):doAction("switch-weapon",amount)
+>>>>>>> cc5ab022f8311423b79b7fd28bb89a908f4cf769
 
 def respawn():
     pass
