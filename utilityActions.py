@@ -66,12 +66,15 @@ def turnAbsAngle(_angle):
 def switchAndShoot(a):
 
 	currentPlayer = readData.getPlayerDetails()
+	print(currentPlayer[4])
 
 	if(currentAmmo() == 0 or currentPlayer[4]==0 or currentPlayer[4]==7): # if no ammo in held gun or fists are equipped, switch to somethin else
 		hasWeapon = [True]+currentPlayer[6]
+		actions.switchWeapon(1)
 	#	hasWeapon=[True]+readData.getWeaponsStatus(plrDetails[0],plrDetails) #add [True] for fists
 		for i in range(6, -1, -1):#start checking from back (6) and end on fists (0) if no ammo
 			hasAmmo = currentPlayer[5][mapWeaponToAmmoType(i)] > 0
+			#print(i,"hasAmmo",hasAmmo,hasWeapon[i])
 			if (hasAmmo  and hasWeapon[i]):
 				actions.switchWeapon(i) #switch to a weapon with ammo
 				time.sleep(1)
@@ -128,14 +131,48 @@ def findClosestObject(objectList):
 		closestObject = -1
 	return closestObject
 
-def findClosestHealth():
+def findFurthestObject(objectList):
+	#objects = readData.getObjectsDetails(readData.getPlayerDetails()[0])
+	if (objectList != []):
+		closestDist = objectList[0][3]
+		closestObject = objectList[0][0]
+		for obj in objectList:
+			dist=obj[3]
+			if (dist>closestDist):
+				closestDist=dist
+				closestObject=obj[0]
+	else:
+		closestObject = -1
+	return closestObject
+
+def findClosestNonEnemy():
+	objects = []
+	plrID = readData.getPlayerDetails()[0]
+	objList = readData.getObjectsDetails(plrID)
+
+	for obj in objList:
+		if(not("player" in obj[1].lower()) and not("dead" in obj[1].lower())):
+			objects.append(obj)
+	return findClosestObject(objects)
+
+def findFurthestHealth():
 	plrId = readData.getPlayerDetails()[0]
 	objList = readData.getObjectsDetails(plrId)
 	healthObj=[]
 	for obj in objList:
 		if("health" in obj[1].lower()):
-			healthObj+=obj
-	return findClosestObject(healthObj)
+			healthObj.append(obj)
+	return findFurthestObject(healthObj)
+
+def findFurhtestAmmo():
+	currentPlayer = readData.getPlayerDetails()
+	plrId = currentPlayer[0]
+	objList = readData.getObjectsDetails(plrId)
+	AmmoObj=[]
+	for obj in objList:
+		if(("shells" in obj[1].lower() and currentPlayer[5][1]) or ("clips" in obj[1].lower() and currentPlayer[5][0]) or ("rockets" in obj[1].lower() and currentPlayer[5][3])):
+			AmmoObj.append(obj)
+	return findFurthestObject(AmmoObj)
 
 def faceObject(objectID):
 	objectDetails = readData.getObjectDetails(objectID)
@@ -147,7 +184,7 @@ def faceObject(objectID):
 		absDegAngle =math.degrees(absRadAngle)
 		if(absDegAngle < 0):absDegAngle += 360
 		turnAbsAngle(absDegAngle)
-		
+
 def faceAwayFromObject(objectID):
 	objectDetails = readData.getObjectDetails(objectID)
 	playerDetails = readData.getPlayerDetails()

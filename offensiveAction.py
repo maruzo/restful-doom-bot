@@ -1,7 +1,7 @@
 import actions, random, readData
 
 
-def attack(objectID, currentPlayerID, distanceLimit, previousDirection = None, futureDirection = None):
+def attack(objectID, currentPlayerID, previousDirection = None, futureDirection = None):
 
     if previousDirection is None:
         previousDirection = random.randint(0,1)
@@ -15,7 +15,7 @@ def attack(objectID, currentPlayerID, distanceLimit, previousDirection = None, f
 #        return previousDirection
     obj = readData.getObjectDetails(objectID)
     if (obj == []):
-        return previousDirection
+        return [previousDirection, 0]
     #stop moving if I am too close
     if (obj[3] < 70):
         return [previousDirection, obj[3]]
@@ -31,10 +31,10 @@ def attack(objectID, currentPlayerID, distanceLimit, previousDirection = None, f
             futureDirection = 0
 
     if futureDirection == 0:
-         actions.strafeLeft(10)
-         actions.forward(10)
+         actions.strafeLeft(random.randint(5,10))
+         actions.forward(random.randint(5,10))
     else:
-        actions.strafeRight(10)
-        actions.forward(10)
+        actions.strafeRight(random.randint(5,10))
+        actions.forward(random.randint(5,10))
 
     return [futureDirection, obj[3]]

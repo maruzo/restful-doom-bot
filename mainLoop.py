@@ -3,7 +3,9 @@ import utilityActions
 import actions
 import readData
 import offensiveAction
+import defensiveAction
 import sys
+import random
 
 
 currentPlayerID = readData.getPlayerDetails()[0]
@@ -20,11 +22,20 @@ enoughAmmo = True
 
 
 previousZigZagDirection = None
+
+#INIT position woth los
+utilityActions.turnAbsAngle(90)
+actions.forward(150)
+count = 0
 while(True): #main loop
+
+	#for not shooting everytime
+	count+=1
 
 	#I am dead
 	if (readData.getObjectDetails(currentPlayerID) == []):
-		sys.exit(0)
+		actions.respawn()
+		continue
 
 
 	plrHP = readData.getPlayerDetails()[1]
@@ -34,9 +45,9 @@ while(True): #main loop
 		enoughHP = False
 	elif (not enoughHP and plrHP>50):
 		enoughHP = True
-	elif(enoughAmmo and useableAmmo<=2):
+	elif(enoughAmmo and useableAmmo<=5):
 		enoughAmmo = False
-	elif(not enoughAmmo and useableAmmo>4):
+	elif(not enoughAmmo and useableAmmo>7):
 		enoughAmmo = True
 
 	if (not enoughHP):
@@ -55,21 +66,34 @@ while(True): #main loop
 			closestEnemyID = utilityActions.findClosestObject(seenEnemyList)
 			#closesDist=readData.getObjectDetails(closestEnemyID)[3]
 			#closeLowHPenemy = utilityActions.findLowestHPEnemy(seenEnemyList, closesDist*1.5)
-			[previousZigZagDirection, distance] = offensiveAction.attack(closestEnemyID, currentPlayerID, 100, previousZigZagDirection)
+			[previousZigZagDirection, distance] = offensiveAction.attack(closestEnemyID, currentPlayerID, previousZigZagDirection)
 			utilityActions.faceObject(closestEnemyID)
-			if (distance < 1800):
+			if (distance < 1800
+			):
 				utilityActions.switchAndShoot(1)
+				count = 0
 			#send shoot action
 			#if out of ammo, switch weapon
 		else:
 			state=AMMO_SEARCH
 			print("AMMO_SEARCH")
 	elif (state==HEALTH_SEARCH):
-		#utilityActions.faceObject(utilityActions.findClosestHealth())
-		NotImplemented
+		closestHPID = utilityActions.findFurthestHealth()
+		[previousZigZagDirection, distance] = defensiveAction.flee(closestHPID, currentPlayerID, previousZigZagDirection)
+		utilityActions.faceAwayFromObject(closestHPID)
+		if (distance < 1800 and count == random.randint(1,4)):
+			utilityActions.switchAndShoot(1) #only shoot if I am pointing at an enemy
+			count = 0
 	elif (state==AMMO_SEARCH):
-		#AMMO_SEARCH
-		NotImplemented
+		closestAmmoID = utilityActions.findFurthestAmmo()
+		[previousZigZagDirection, distance] = defensiveAction.flee(closestAmmoID, currentPlayerID, previousZigZagDirection)
+		utilityActions.faceAwayFromObject(closestAmmoID)
+		if (distance < 1800 and count == random.randint(1,4)):
+			utilityActions.switchAndShoot(1) #only shoot if I am pointing at an enemy
+			count = 0
+
 	if(state==ENEMY_SEARCH):#not an else if, as this state could have been assigned during the begging IF statement
 		#ENEMY_SEARCH
-		NotImplemented
+		closestObjectID = utilityActions.findClosestNonEnemy()
+		actions.forward(random.randint(5,20))
+		utilityActions.faceObject(closestObjectID)
