@@ -6,6 +6,7 @@ import offensiveAction
 import defensiveAction
 import sys
 import random
+import threading
 
 
 currentPlayerID = readData.getPlayerDetails()[0]
@@ -67,7 +68,8 @@ while(True): #main loop
 			#closesDist=readData.getObjectDetails(closestEnemyID)[3]
 			#closeLowHPenemy = utilityActions.findLowestHPEnemy(seenEnemyList, closesDist*1.5)
 			[previousZigZagDirection, distance] = offensiveAction.attack(closestEnemyID, currentPlayerID, previousZigZagDirection)
-			utilityActions.faceObject(closestEnemyID)
+			t1 = threading.Thread(target = utilityActions.faceObject, args = [closestEnemyID])
+			t1.start()
 			if (distance < 1800):
 				utilityActions.switchAndShoot(1)
 				count = 0
@@ -81,6 +83,8 @@ while(True): #main loop
 		closestHPID = utilityActions.findFurthestHealth()
 		[previousZigZagDirection, distance] = defensiveAction.flee(closestHPID, currentPlayerID, previousZigZagDirection)
 		utilityActions.faceAwayFromObject(closestHPID)
+		t1 = threading.Thread(target = utilityActions.faceObject, args = [closestEnemyID])
+		t1.start()
 		if (distance < 1800 and count == random.randint(1,4)):
 			utilityActions.switchAndShoot(1) #only shoot if I am pointing at an enemy
 			count = 0

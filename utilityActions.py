@@ -44,6 +44,8 @@ def waitUntilTurnFinished():
 '''
 
 def turnAbsAngle(_angle):
+	move = 3
+
 	angle = readData.getPlayerDetails()[2]
 	turn = _angle - angle
 	if (abs(_angle-angle) > 180):
@@ -59,9 +61,9 @@ def turnAbsAngle(_angle):
 	while (abs(_angle-angle) >= 5):
 		angle = readData.getPlayerDetails()[2]
 		if(left):
-			actions.turnLeft(3)
+			actions.turnLeft(move)
 		else:
-			actions.turnRight(3)
+			actions.turnRight(move)
 
 def switchAndShoot(a):
 
