@@ -128,6 +128,14 @@ def findClosestObject(objectList):
 		closestObject = -1
 	return closestObject
 
+def findClosestNonEnemy():
+        plrID = readData.getPlayerDetails()[0]
+        objList = readData.getObjectsDetails(plrId)
+        for obj in objList:
+                if(not("player" in obj[1].lower())):
+                   objs.append(obj)
+        return findClosestObject(obj)      
+
 def findClosestHealth():
 	plrId = readData.getPlayerDetails()[0]
 	objList = readData.getObjectsDetails(plrId)
