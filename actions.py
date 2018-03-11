@@ -2,13 +2,19 @@ from request import post
 
 repeat = 2
 
+'''
 def doAction(name,amount):
     for i in range(repeat):
         if post("/api/player/actions", {'type': name,'amount': amount}) != 201:
             print(name+' command was not executed')
         else:
             break
+'''
 
+def doAction(name,amount):
+    if post("/api/player/actions", {'type': name,'amount': amount}) != 201:
+        print(name+' command was not executed')
+			
 def shoot(amount):doAction("shoot",amount)
 def forward(amount):doAction("forward",amount)
 def backward(amount):doAction("backward",amount)
