@@ -3,6 +3,7 @@ import utilityActions
 import actions
 import readData
 import offensiveAction
+import defensiveAction
 import sys
 
 
@@ -34,9 +35,9 @@ while(True): #main loop
 		enoughHP = False
 	elif (not enoughHP and plrHP>50):
 		enoughHP = True
-	elif(enoughAmmo and useableAmmo<=2):
+	elif(enoughAmmo and useableAmmo<=5):
 		enoughAmmo = False
-	elif(not enoughAmmo and useableAmmo>4):
+	elif(not enoughAmmo and useableAmmo>7):
 		enoughAmmo = True
 
 	if (not enoughHP):
@@ -55,7 +56,7 @@ while(True): #main loop
 			closestEnemyID = utilityActions.findClosestObject(seenEnemyList)
 			#closesDist=readData.getObjectDetails(closestEnemyID)[3]
 			#closeLowHPenemy = utilityActions.findLowestHPEnemy(seenEnemyList, closesDist*1.5)
-			[previousZigZagDirection, distance] = offensiveAction.attack(closestEnemyID, currentPlayerID, 100, previousZigZagDirection)
+			[previousZigZagDirection, distance] = offensiveAction.attack(closestEnemyID, currentPlayerID, previousZigZagDirection)
 			utilityActions.faceObject(closestEnemyID)
 			if (distance < 1800):
 				utilityActions.switchAndShoot(1)
@@ -66,10 +67,18 @@ while(True): #main loop
 			state = ENEMY_SEARCH
 			print("ENEMY_SEARCH")
 	elif (state==HEALTH_SEARCH):
-		utilityActions.faceObject(utilityActions.findClosestHealth())
+		closestHPID = utilityActions.findClosestHealth()
+		[previousZigZagDirection, distance] = defensiveAction.flee(closestHPID, currentPlayerID, previousZigZagDirection)
+		utilityActions.faceAwayFromObject(closestHPID)
+		if (distance < 1800):
+			utilityActions.switchAndShoot(1) #only shoot if I am pointing at an enemy
 	elif (state==AMMO_SEARCH):
-		#AMMO_SEARCH
-		NotImplemented
+		closestAmmoID = utilityActions.findClosestAmmo()
+		[previousZigZagDirection, distance] = defensiveAction.flee(closestAmmoID, currentPlayerID, previousZigZagDirection)
+		utilityActions.faceAwayFromObject(closestAmmoID)
+		if (distance < 1800):
+			utilityActions.switchAndShoot(1) #only shoot if I am pointing at an enemy
+
 	if(state==ENEMY_SEARCH):#not an else if, as this state could have been assigned during the begging IF statement
 		#ENEMY_SEARCH
 		NotImplemented

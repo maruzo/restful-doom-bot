@@ -1,7 +1,7 @@
 import actions, random, readData
 
 
-def attack(objectID, currentPlayerID, distanceLimit, previousDirection = None, futureDirection = None):
+def flee(objectID, currentPlayerID, previousDirection = None, futureDirection = None):
 
     if previousDirection is None:
         previousDirection = random.randint(0,1)
@@ -14,11 +14,8 @@ def attack(objectID, currentPlayerID, distanceLimit, previousDirection = None, f
 #    if (readData.getObjectDetails(objectID)[3] <= distanceLimit):
 #        return previousDirection
     obj = readData.getObjectDetails(objectID)
-    if (obj == []):	
-        return previousDirection
-    #stop moving if I am too close
-    if (obj[3] < 70):
-        return previousDirection
+    if (obj == []):
+        return [previousDirection, 0]
 
     x = readData.getObjectDetails(objectID)[2][0]
     y = readData.getObjectDetails(objectID)[2][1]
@@ -37,4 +34,4 @@ def attack(objectID, currentPlayerID, distanceLimit, previousDirection = None, f
         actions.strafeRight(10)
         actions.backward(10)
 
-    return futureDirection
+    return [futureDirection, obj[3]]

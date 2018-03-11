@@ -134,18 +134,17 @@ def findClosestHealth():
 	healthObj=[]
 	for obj in objList:
 		if("health" in obj[1].lower()):
-			healthObj+=obj
+			healthObj.append(obj)
 	return findClosestObject(healthObj)
 
 def findClosestAmmo():
-	currentPlayer = readData.getPlayerDetails()
-	plrId = currentPlayer[0]
+	plrId = readData.getPlayerDetails()[0]
 	objList = readData.getObjectsDetails(plrId)
-	healthObj=[]
+	AmmoObj=[]
 	for obj in objList:
 		if("shells" in obj[1].lower()  or "clips" in obj[1].lower()):
-			healthObj+=obj
-	return findClosestObject(healthObj)
+			AmmoObj.append(obj)
+	return findClosestObject(AmmoObj)
 
 def faceObject(objectID):
 	objectDetails = readData.getObjectDetails(objectID)
@@ -157,7 +156,7 @@ def faceObject(objectID):
 		absDegAngle =math.degrees(absRadAngle)
 		if(absDegAngle < 0):absDegAngle += 360
 		turnAbsAngle(absDegAngle)
-		
+
 def faceAwayFromObject(objectID):
 	objectDetails = readData.getObjectDetails(objectID)
 	playerDetails = readData.getPlayerDetails()
