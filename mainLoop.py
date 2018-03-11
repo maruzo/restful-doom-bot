@@ -66,8 +66,7 @@ while(True): #main loop
 			state = ENEMY_SEARCH
 			print("ENEMY_SEARCH")
 	elif (state==HEALTH_SEARCH):
-		#utilityActions.faceObject(utilityActions.findClosestHealth())
-		NotImplemented
+		utilityActions.faceObject(utilityActions.findClosestHealth())
 	elif (state==AMMO_SEARCH):
 		#AMMO_SEARCH
 		NotImplemented

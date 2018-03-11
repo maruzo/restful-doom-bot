@@ -142,6 +142,16 @@ def findClosestHealth():
 			healthObj+=obj
 	return findClosestObject(healthObj)
 
+def findClosestAmmo():
+	currentPlayer = readData.getPlayerDetails()
+	plrId = currentPlayer[0]
+	objList = readData.getObjectsDetails(plrId)
+	healthObj=[]
+	for obj in objList:
+		if("shells" in obj[1].lower()  or "clips" in obj[1].lower()):
+			healthObj+=obj
+	return findClosestObject(healthObj)
+
 def faceObject(objectID):
 	objectDetails = readData.getObjectDetails(objectID)
 	playerDetails = readData.getPlayerDetails()
