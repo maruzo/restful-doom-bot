@@ -130,6 +130,15 @@ def findClosestObject(objectList):
 			closestObject=obj[0]
 
 	return closestObject
+	
+def findClosestHealth()
+	plrId = readData.getPlayerDetails()[0]
+	objList = getObjectsDetails(plrId)
+	healthObj=[]
+	for obj in objList:
+		if("health" in obj[1].lower()):
+			healthObj+=obj
+	return findClosestObject(healthObj)
 
 def faceObject(objectID):
 	objectDetails = readData.getObjectDetails(objectID)
