@@ -81,6 +81,29 @@ def getObjectsDetails(currentPlayerID):
     return returnData
 
 #-----------------------------------------------------------------------------------------
+#Get info about all objects who are enemies
+#[[id, type,[x, y], distance]]
+
+def getEnemiesObjectDetails(currentPlayerID):
+    returnData = []
+    data = get("/api/world/objects")
+
+    for i in range(len(data)):
+        eachEnemy = []
+        eachEnemyXY = []
+        if data[i]["id"] != currentPlayerID and data[i]["type"] == "Player":
+            eachEnemy.append(data[i]["id"])
+            eachEnemy.append(data[i]["type"])
+            eachEnemyXY.append(data[i]["position"]["x"])
+            eachEnemyXY.append(data[i]["position"]["y"])
+            eachEnemy.append(eachEnemyXY)
+            eachEnemy.append(data[i]["distance"])
+            returnData.append(eachEnemy)
+
+    return returnData
+
+#-----------------------------------------------------------------------------------------
+
 #Get info about one objects
 #[[id, type,[x, y], distance]]
 
@@ -149,7 +172,7 @@ def LOS(id1, id2):
 def getWeaponsStatus(ID, details):
     for i in range(len(details)):
         if(details[i][0] == ID):
-            return(details[i][6])    
+            return(details[i][6])
 
 #-----------------------------------------------------------------------------------------
 

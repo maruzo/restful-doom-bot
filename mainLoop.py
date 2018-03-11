@@ -15,7 +15,7 @@ enoughAmmo = True
 
 while(True): #main loop
 
-	plrHP = currentPlayerDetails
+	plrHP = readData.getPlayerDetails()[1]
 	useableAmmo = 3               ####place holder####
 
 	if (enoughHP and plrHP<30):
@@ -37,10 +37,10 @@ while(True): #main loop
 	if (state==FIGHT):
 		seenEnemyList=utilityActions.listSeenEnemies()
 		if (seenEnemyList!=[]):
-			closesEnemy=utilityActions.findClosestObject(seenEnemyList)
-			closesDist=utilityActions.distanceToEnemy(closesEnemy)
-			closeLowHPenemy = utilityActions.findLowestHPEnemy(seenEnemyList, closesDist*1.5)
-			utilityActions.faceEnemy(closeLowHPenemy)
+			closestEnemyID = utilityActions.findClosestObject(readData.getEnemiesObjectDetails(readData.getPlayerDetails()[0]))
+			#closesDist=readData.getObjectDetails(closestEnemyID)[3]
+			#closeLowHPenemy = utilityActions.findLowestHPEnemy(seenEnemyList, closesDist*1.5)
+			utilityActions.faceObject(closestEnemyID)
 			utilityActions.switchAndShoot(2)
 			#send shoot action
 			#if out of ammo, switch weapon
@@ -48,8 +48,10 @@ while(True): #main loop
 			#no one in line of sight, search for enemies
 			state = ENEMY_SEARCH
 	elif (state==HEALTH_SEARCH):
-		return
+		NotImplemented
 	elif (state==AMMO_SEARCH):
 		#AMMO_SEARCH
+		NotImplemented
 	if(state==ENEMY_SEARCH):#not an else if, as this state could have been assigned during the begging IF statement
 		#ENEMY_SEARCH
+		NotImplemented

@@ -69,14 +69,19 @@ def turnAbsAngle(_angle):
 			actions.turnRight(3)
 
 def switchAndShoot(a):
-	if(currentAmmo()==0 || readData.getPlayerDetails()[5]==0): # if no ammo in held gun or fists are equipped, switch to somethin else
-		plrDetails = readData.getPlayerDetails()
-		hasWeapon=[True]+readData.getWeaponsStatus(plrDetails[0],plrDetails) #add [True] for fists
+
+	currentPlayer = readData.getPlayerDetails()
+
+	if(currentAmmo() == 0 or currentPlayer[4]==0): # if no ammo in held gun or fists are equipped, switch to somethin else
+		hasWeapon = [True]+currentPlayer[6]
+	#	hasWeapon=[True]+readData.getWeaponsStatus(plrDetails[0],plrDetails) #add [True] for fists
 		for i in range(6, -1, -1):#start checking from back (6) and end on fists (0) if no ammo
-			hasAmmo = readData.getCurrentAmmoDetails()[4][mapWeaponToAmmoType(i)]
-			if (hasAmmo && hasWeapon[i]):
+			hasAmmo = currentPlayer[5][mapWeaponToAmmoType(i)] > 0
+			if (hasAmmo  and hasWeapon[i]):
+				actions.switchWeapon(i) #switch to a weapon with ammo
+				time.sleep(1)
 				break
-		action.switchWeapon(i)#switch to a weapon with ammo
+
 	actions.shoot(a)
 
 def currentAmmo():
@@ -104,11 +109,11 @@ def findLowestHPEnemy(_range):
 
 	return lowestEnemy
 
-def findClosestObject():
-	objects = readData.getObjectsDetails(readData.getPlayerDetails()[0])
-	closestDist = objects[0][3]
-	closestObject = objects[0][0]
-	for obj in objects:
+def findClosestObject(objectList):
+	#objects = readData.getObjectsDetails(readData.getPlayerDetails()[0])
+	closestDist = objectList[0][3]
+	closestObject = objectList[0][0]
+	for obj in objectList:
 		dist=obj[3]
 		if (dist<closestDist):
 			closestDist=dist
@@ -135,7 +140,7 @@ def listSeenEnemies():
 	return seenEnemyList
 
 if __name__ == "__main__":
-    print(listSeenEnemies())
+    print(switchAndShoot(2))
 
 #redundant function, replaced by listSeenEnemies
 
