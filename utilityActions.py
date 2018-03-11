@@ -72,7 +72,7 @@ def switchAndShoot(a):
 
 	currentPlayer = readData.getPlayerDetails()
 
-	if(currentAmmo() == 0 or currentPlayer[4]==0): # if no ammo in held gun or fists are equipped, switch to somethin else
+	if(currentAmmo() == 0 or currentPlayer[4]==0 or currentPlayer[4]==7): # if no ammo in held gun or fists are equipped, switch to somethin else
 		hasWeapon = [True]+currentPlayer[6]
 	#	hasWeapon=[True]+readData.getWeaponsStatus(plrDetails[0],plrDetails) #add [True] for fists
 		for i in range(6, -1, -1):#start checking from back (6) and end on fists (0) if no ammo
@@ -92,7 +92,7 @@ def currentAmmo():
 		return 9999 #fists or chainsaw dont require ammo
 
 def mapWeaponToAmmoType(weaponNo):
-	return [-1,0,1,0,3,2,2][weaponNo]
+	return [-1,0,1,0,3,2,2,-1][weaponNo]
 
 
 
@@ -127,8 +127,11 @@ def faceObject(objectID):
 
 	dx=objectDetails[2][0] - playerDetails[3][0] #get Xs
 	dy=objectDetails[2][1] - playerDetails[3][1] #get Ys
-	absAngle=math.atan2(dy,dx)
-	turnAbsAngle(absAngle)
+	absRadAngle = math.atan2(dy,dx)
+	absDegAngle =math.degrees(absRadAngle)
+	if(absDegAngle < 0):absDegAngle += 360
+	print(absDegAngle)
+	turnAbsAngle(absDegAngle)
 
 def listSeenEnemies():
 	seenEnemyList = []
