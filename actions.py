@@ -41,8 +41,9 @@ def strafeRight(amount):
 def switchWeapon(amount):
     if post("/api/player/actions", {'type': 'switch-weapon','amount': amount}) != 201:
         raise ValueError('Switch weapon command was not executed')
+
 def respawn():
-    pass
+    print("waiting for respawn")
 
 if __name__ == "__main__":
     print(forward(10))
