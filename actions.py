@@ -2,67 +2,22 @@ from request import post
 
 repeat = 2
 
-def shoot(amount):
+def doAction(name,amount):
     for i in range(repeat):
-        if post("/api/player/actions", {'type': 'shoot','amount': amount}) != 201:
-            print('Shoot command was not executed')
+        if post("/api/player/actions", {'type': name,'amount': amount}) != 201:
+            print(name+' command was not executed')
         else:
             break
 
-def forward(amount):
-    for i in range(repeat):
-        if post("/api/player/actions", {'type': 'forward','amount': amount}) != 201:
-            print('Forward command was not executed')
-        else:
-            break
-
-def backward(amount):
-    for i in range(repeat):
-        if post("/api/player/actions", {'type': 'backward','amount': amount}) != 201:
-            print('Backward command was not executed')
-        else:
-            break
-
-def turnLeft(amount):
-    for i in range(repeat):
-        if post("/api/player/actions", {'type': 'turn-left','amount': amount}) != 201:
-            print('Turn Left command was not executed')
-        else:
-            break
-
-def turnRight(amount):
-    for i in range(repeat):
-        if post("/api/player/actions", {'type': 'turn-right','amount': amount}) != 201:
-            print('Turn righth command was not executed')
-        else:
-            break
-
-def use(amount):
-    for i in range(repeat):
-        if post("/api/player/actions", {'type': 'use','amount': amount}) != 201:
-            print('Use command was not executed')
-        else:
-            break
-
-def strafeLeft(amount):
-    for i in range(repeat):
-        if post("/api/player/actions", {'type': 'strafe-left','amount': amount}) != 201:
-            print('Strafe left command was not executed')
-        else:
-            break
-
-def strafeRight(amount):
-    for i in range(repeat):
-        if post("/api/player/actions", {'type': 'strafe-right','amount': amount}) != 201:
-            print('Strafe right command was not executed')
-        else:
-            break
-def switchWeapon(amount):
-    for i in range(repeat):
-        if post("/api/player/actions", {'type': 'switch-weapon','amount': amount}) != 201:
-            print('Switch weapon command was not executed')
-        else:
-            break
+def shoot(amount):doAction("shoot",amount)
+def forward(amount):doAction("forward",amount)
+def backward(amount):doAction("backward",amount)
+def turnLeft(amount):doAction("turn-left",amount)
+def turnRight(amount):doAction("turn-right",amount)
+def use(amount):doAction("use",amount)
+def strafeLeft(amount):doAction("strafe-left",amount)
+def strafeRight(amount):doAction("strafe-right",amount)
+def switchWeapon(amount):doAction("switch-weapon",amount)
 
 def respawn():
     pass
