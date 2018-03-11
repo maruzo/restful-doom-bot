@@ -28,10 +28,10 @@ def flee(objectID, currentPlayerID, previousDirection = None, futureDirection = 
             futureDirection = 0
 
     if futureDirection == 0:
-         actions.strafeLeft(10)
-         actions.backward(10)
+         actions.strafeLeft(random.randint(5,20))
+         actions.backward(random.randint(5,20))
     else:
-        actions.strafeRight(10)
-        actions.backward(10)
+        actions.strafeRight(random.randint(5,20))
+        actions.backward(random.randint(5,20))
 
     return [futureDirection, obj[3]]

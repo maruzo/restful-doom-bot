@@ -31,10 +31,10 @@ def attack(objectID, currentPlayerID, previousDirection = None, futureDirection 
             futureDirection = 0
 
     if futureDirection == 0:
-         actions.strafeLeft(10)
-         actions.forward(10)
+         actions.strafeLeft(random.randint(5,10))
+         actions.forward(random.randint(5,10))
     else:
-        actions.strafeRight(10)
-        actions.forward(10)
+        actions.strafeRight(random.randint(5,10))
+        actions.forward(random.randint(5,10))
 
     return [futureDirection, obj[3]]

@@ -128,24 +128,40 @@ def findClosestObject(objectList):
 		closestObject = -1
 	return closestObject
 
-def findClosestNonEnemy():
-        plrID = readData.getPlayerDetails()[0]
-        objList = readData.getObjectsDetails(plrId)
-        for obj in objList:
-                if(not("player" in obj[1].lower())):
-                   objs.append(obj)
-        return findClosestObject(obj)      
+def findFurthestObject(objectList):
+	#objects = readData.getObjectsDetails(readData.getPlayerDetails()[0])
+	if (objectList != []):
+		closestDist = objectList[0][3]
+		closestObject = objectList[0][0]
+		for obj in objectList:
+			dist=obj[3]
+			if (dist>closestDist):
+				closestDist=dist
+				closestObject=obj[0]
+	else:
+		closestObject = -1
+	return closestObject
 
-def findClosestHealth():
+def findClosestNonEnemy():
+	objects = []
+	plrID = readData.getPlayerDetails()[0]
+	objList = readData.getObjectsDetails(plrID)
+
+	for obj in objList:
+		if(not("player" in obj[1].lower()) and not("dead" in obj[1].lower())):
+			objects.append(obj)
+	return findClosestObject(objects)
+
+def findFurthestHealth():
 	plrId = readData.getPlayerDetails()[0]
 	objList = readData.getObjectsDetails(plrId)
 	healthObj=[]
 	for obj in objList:
 		if("health" in obj[1].lower()):
 			healthObj.append(obj)
-	return findClosestObject(healthObj)
+	return findFurthestObject(healthObj)
 
-def findClosestAmmo():
+def findFurhtestAmmo():
 	currentPlayer = readData.getPlayerDetails()
 	plrId = currentPlayer[0]
 	objList = readData.getObjectsDetails(plrId)
@@ -153,7 +169,7 @@ def findClosestAmmo():
 	for obj in objList:
 		if(("shells" in obj[1].lower() and currentPlayer[5][1]) or ("clips" in obj[1].lower() and currentPlayer[5][0]) or ("rockets" in obj[1].lower() and currentPlayer[5][3])):
 			AmmoObj.append(obj)
-	return findClosestObject(AmmoObj)
+	return findFurthestObject(AmmoObj)
 
 def faceObject(objectID):
 	objectDetails = readData.getObjectDetails(objectID)

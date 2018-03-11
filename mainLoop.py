@@ -5,6 +5,7 @@ import readData
 import offensiveAction
 import defensiveAction
 import sys
+import random
 
 
 currentPlayerID = readData.getPlayerDetails()[0]
@@ -25,8 +26,11 @@ previousZigZagDirection = None
 #INIT position woth los
 utilityActions.turnAbsAngle(90)
 actions.forward(150)
-
+count = 0
 while(True): #main loop
+
+	#for not shooting everytime
+	count+=1
 
 	#I am dead
 	if (readData.getObjectDetails(currentPlayerID) == []):
@@ -63,8 +67,10 @@ while(True): #main loop
 			#closeLowHPenemy = utilityActions.findLowestHPEnemy(seenEnemyList, closesDist*1.5)
 			[previousZigZagDirection, distance] = offensiveAction.attack(closestEnemyID, currentPlayerID, previousZigZagDirection)
 			utilityActions.faceObject(closestEnemyID)
-			if (distance < 1800):
+			if (distance < 1800
+			):
 				utilityActions.switchAndShoot(1)
+				count = 0
 			#send shoot action
 			#if out of ammo, switch weapon
 		else:
@@ -72,21 +78,22 @@ while(True): #main loop
 			state = ENEMY_SEARCH
 			print("ENEMY_SEARCH")
 	elif (state==HEALTH_SEARCH):
-		closestHPID = utilityActions.findClosestHealth()
+		closestHPID = utilityActions.findFurthestHealth()
 		[previousZigZagDirection, distance] = defensiveAction.flee(closestHPID, currentPlayerID, previousZigZagDirection)
 		utilityActions.faceAwayFromObject(closestHPID)
-		if (distance < 1800):
+		if (distance < 1800 and count == random.randint(1,4)):
 			utilityActions.switchAndShoot(1) #only shoot if I am pointing at an enemy
+			count = 0
 	elif (state==AMMO_SEARCH):
-		closestAmmoID = utilityActions.findClosestAmmo()
+		closestAmmoID = utilityActions.findFurthestAmmo()
 		[previousZigZagDirection, distance] = defensiveAction.flee(closestAmmoID, currentPlayerID, previousZigZagDirection)
 		utilityActions.faceAwayFromObject(closestAmmoID)
-		if (distance < 1800):
+		if (distance < 1800 and count == random.randint(1,4)):
 			utilityActions.switchAndShoot(1) #only shoot if I am pointing at an enemy
+			count = 0
 
 	if(state==ENEMY_SEARCH):#not an else if, as this state could have been assigned during the begging IF statement
 		#ENEMY_SEARCH
-		ClosestObjectID = utilityActions.findNearestNonEnemy()
-		[previousZigZagDirection, distance] = defensiveAction.flee(closestObjectID, currentPlayerID, previousZigZagDirection)
-		utilityActions.faceAwayFromObject(closestObjectID)
-		
+		closestObjectID = utilityActions.findClosestNonEnemy()
+		actions.forward(random.randint(5,20))
+		utilityActions.faceObject(closestObjectID)
