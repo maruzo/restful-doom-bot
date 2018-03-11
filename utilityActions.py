@@ -1,4 +1,3 @@
-
 import math
 import actions
 import readData
@@ -24,10 +23,6 @@ def turnAbsAngle(_angle):
 				else:
 					actions.turnRight(3)
 		time.sleep(10)
-
-
-
-
 def waitUntilTurnFinished():
 	angle = readData.getPlayerDetails()[2]
 	lastAngle = -1
@@ -162,6 +157,19 @@ def faceObject(objectID):
 		absDegAngle =math.degrees(absRadAngle)
 		if(absDegAngle < 0):absDegAngle += 360
 		turnAbsAngle(absDegAngle)
+		
+def faceAwayFromObject(objectID):
+	objectDetails = readData.getObjectDetails(objectID)
+	playerDetails = readData.getPlayerDetails()
+	if (objectDetails != []):
+		dx=objectDetails[2][0] - playerDetails[3][0] #get Xs
+		dy=objectDetails[2][1] - playerDetails[3][1] #get Ys
+		absRadAngle = math.atan2(dy,dx)
+		absDegAngle =math.degrees(absRadAngle)
+		absDegAngle+=180
+		if(absDegAngle < 0):absDegAngle += 360
+		if(absDegAngle > 360):absDegAngle -= 360
+		turnAbsAngle(absDegAngle)
 
 def listSeenEnemies():
 	seenEnemyList = []
@@ -188,6 +196,5 @@ def canSeeEnemy():
 		if LOS(prlID,enemyID):
 			canSee=True
 			break
-
 	return canSee
 '''
