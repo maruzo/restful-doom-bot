@@ -41,7 +41,7 @@ def getEnemyDetails(currentPlayerID):
     for i in range(len(data)):
         eachEnemy = []
         eachEnemyXY = []
-        if data[i]["id"] != currentPlayerID:
+        if data[i]["id"] != currentPlayerID and data[i]["health"] > 0 :
             eachEnemy.append(data[i]["id"])
             if data[i]["health"] < 0:
                 eachEnemy.append(0)
@@ -69,7 +69,7 @@ def getObjectsDetails(currentPlayerID):
     for i in range(len(data)):
         eachEnemy = []
         eachEnemyXY = []
-        if data[i]["id"] != currentPlayerID:
+        if data[i]["id"] != currentPlayerID and data[i]["health"] > 0:
             eachEnemy.append(data[i]["id"])
             eachEnemy.append(data[i]["type"])
             eachEnemyXY.append(data[i]["position"]["x"])
@@ -82,7 +82,7 @@ def getObjectsDetails(currentPlayerID):
 
 #-----------------------------------------------------------------------------------------
 #Get info about all objects who are enemies
-#[[id, type,[x, y], distance]]
+#[[id, type,[x, y], distance, health]]
 
 def getEnemiesObjectDetails(currentPlayerID):
     returnData = []
@@ -91,13 +91,14 @@ def getEnemiesObjectDetails(currentPlayerID):
     for i in range(len(data)):
         eachEnemy = []
         eachEnemyXY = []
-        if data[i]["id"] != currentPlayerID and data[i]["type"] == "Player":
+        if data[i]["id"] != currentPlayerID and data[i]["type"] == "Player" and data[i]["health"] > 0:
             eachEnemy.append(data[i]["id"])
             eachEnemy.append(data[i]["type"])
             eachEnemyXY.append(data[i]["position"]["x"])
             eachEnemyXY.append(data[i]["position"]["y"])
             eachEnemy.append(eachEnemyXY)
             eachEnemy.append(data[i]["distance"])
+            eachEnemy.append(data[i]["health"])
             returnData.append(eachEnemy)
 
     return returnData
@@ -105,25 +106,25 @@ def getEnemiesObjectDetails(currentPlayerID):
 #-----------------------------------------------------------------------------------------
 
 #Get info about one objects
-#[[id, type,[x, y], distance]]
+#[id, type,[x, y], distance, health]
 
 def getObjectDetails(objectID):
-    returnData = []
+    eachEnemy = []
     data = get("/api/world/objects")
 
     for i in range(len(data)):
-        eachEnemy = []
+
         eachEnemyXY = []
-        if data[i]["id"] == objectID:
+        if data[i]["id"] == objectID and data[i]["health"] > 0:
             eachEnemy.append(data[i]["id"])
             eachEnemy.append(data[i]["type"])
             eachEnemyXY.append(data[i]["position"]["x"])
             eachEnemyXY.append(data[i]["position"]["y"])
             eachEnemy.append(eachEnemyXY)
             eachEnemy.append(data[i]["distance"])
-            returnData.append(eachEnemy)
+            eachEnemy.append(data[i]["health"])
 
-    return returnData[0]
+    return eachEnemy
 #-----------------------------------------------------------------------------------------
 
 #nicer functions that return the said data by an ID
@@ -163,8 +164,9 @@ def getCurrentAmmoDetails(ID, details):
 #line of sight returns boolean
 
 def LOS(id1, id2):
-    data = get("/api/world/los/"+id1+"/"+id2+"")
-    return data["los"];
+    data = get("/api/world/los/" + str(id1) + "/" + str(id2))
+    print(data)
+    return data['los'];
 
 #-----------------------------------------------------------------------------------------
 

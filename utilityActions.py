@@ -91,7 +91,7 @@ def currentAmmo():
 	else:
 		return 9999 #fists or chainsaw dont require ammo
 
-		
+
 def useableAmmo():
 	total=0
 	currentPlayer = readData.getPlayerDetails()
@@ -99,8 +99,8 @@ def useableAmmo():
 	for i in range(1,7):
 		if (hasWeapon[i]):
 			total += currentPlayer[5][mapWeaponToAmmoType(i)]
-	return total	
-	
+	return total
+
 def mapWeaponToAmmoType(weaponNo):
 	return [-1,0,1,0,3,2,2,-1][weaponNo]
 
@@ -121,19 +121,21 @@ def findLowestHPEnemy(_range):
 
 def findClosestObject(objectList):
 	#objects = readData.getObjectsDetails(readData.getPlayerDetails()[0])
-	closestDist = objectList[0][3]
-	closestObject = objectList[0][0]
-	for obj in objectList:
-		dist=obj[3]
-		if (dist<closestDist):
-			closestDist=dist
-			closestObject=obj[0]
-
+	if (objectList != []):
+		closestDist = objectList[0][3]
+		closestObject = objectList[0][0]
+		for obj in objectList:
+			dist=obj[3]
+			if (dist<closestDist):
+				closestDist=dist
+				closestObject=obj[0]
+	else:
+		closestObject = -1
 	return closestObject
-	
-def findClosestHealth()
+
+def findClosestHealth():
 	plrId = readData.getPlayerDetails()[0]
-	objList = getObjectsDetails(plrId)
+	objList = readData.getObjectsDetails(plrId)
 	healthObj=[]
 	for obj in objList:
 		if("health" in obj[1].lower()):
@@ -143,27 +145,30 @@ def findClosestHealth()
 def faceObject(objectID):
 	objectDetails = readData.getObjectDetails(objectID)
 	playerDetails = readData.getPlayerDetails()
-
-	dx=objectDetails[2][0] - playerDetails[3][0] #get Xs
-	dy=objectDetails[2][1] - playerDetails[3][1] #get Ys
-	absRadAngle = math.atan2(dy,dx)
-	absDegAngle =math.degrees(absRadAngle)
-	if(absDegAngle < 0):absDegAngle += 360
-	print(absDegAngle)
-	turnAbsAngle(absDegAngle)
+	if (objectDetails != []):
+		dx=objectDetails[2][0] - playerDetails[3][0] #get Xs
+		dy=objectDetails[2][1] - playerDetails[3][1] #get Ys
+		absRadAngle = math.atan2(dy,dx)
+		absDegAngle =math.degrees(absRadAngle)
+		if(absDegAngle < 0):absDegAngle += 360
+		turnAbsAngle(absDegAngle)
 
 def listSeenEnemies():
 	seenEnemyList = []
 	currentPlayerID = readData.getPlayerDetails()[0]
-	for enemies in readData.getEnemyDetails(currentPlayerID):
-		if readData.LOS(str(currentPlayerID), str(enemies[0])):
-			seenEnemyList.append(enemies[0])
+	objs = readData.getEnemyDetails(currentPlayerID)
+	if (objs != []):
+		for enemies in objs:
+			print(enemies)
+			if readData.LOS(currentPlayerID, enemies[0]):
+				seenEnemyList.append(enemies)
 
 	return seenEnemyList
 
 if __name__ == "__main__":
-    print(switchAndShoot(2))
+	faceObject(findClosestHealth())
 
+'''print(switchAndShoot(2))'''
 #redundant function, replaced by listSeenEnemies
 
 '''

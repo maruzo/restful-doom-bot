@@ -2,6 +2,11 @@
 import utilityActions
 import actions
 import readData
+import offensiveAction
+import sys
+
+
+currentPlayerID = readData.getPlayerDetails()[0]
 
 #state = HEALTH_SEARCH | AMMO_SEARCH | FIGHT | ENEMY_SEARCH
 FIGHT = 0
@@ -13,10 +18,17 @@ state = FIGHT
 enoughHP = True
 enoughAmmo = True
 
+
+previousZigZagDirection = None
 while(True): #main loop
 
+	#I am dead
+	if (readData.getObjectDetails(currentPlayerID) == []):
+		sys.exit(0)
+
+
 	plrHP = readData.getPlayerDetails()[1]
-	useableAmmo = 3               ####place holder####
+	useableAmmo = utilityActions.useableAmmo()
 
 	if (enoughHP and plrHP<30):
 		enoughHP = False
@@ -29,25 +41,31 @@ while(True): #main loop
 
 	if (not enoughHP):
 		state=HEALTH_SEARCH #health search takes priority over ammo search
+		print("HEALTH_SEARCH")
 	elif (not enoughAmmo):
 		state=AMMO_SEARCH
+		print("AMMO_SEARCH")
 	else:
 		state=FIGHT
+		print("FIGHT")
 
 	if (state==FIGHT):
 		seenEnemyList=utilityActions.listSeenEnemies()
 		if (seenEnemyList!=[]):
-			closestEnemyID = utilityActions.findClosestObject(readData.getEnemiesObjectDetails(readData.getPlayerDetails()[0]))
+			closestEnemyID = utilityActions.findClosestObject(seenEnemyList)
 			#closesDist=readData.getObjectDetails(closestEnemyID)[3]
 			#closeLowHPenemy = utilityActions.findLowestHPEnemy(seenEnemyList, closesDist*1.5)
+			previousZigZagDirection = offensiveAction.attack(closestEnemyID, currentPlayerID, 100, previousZigZagDirection)
 			utilityActions.faceObject(closestEnemyID)
-			utilityActions.switchAndShoot(2)
+			utilityActions.switchAndShoot(1)
 			#send shoot action
 			#if out of ammo, switch weapon
 		else:
 			#no one in line of sight, search for enemies
 			state = ENEMY_SEARCH
+			print("ENEMY_SEARCH")
 	elif (state==HEALTH_SEARCH):
+		#utilityActions.faceObject(utilityActions.findClosestHealth())
 		NotImplemented
 	elif (state==AMMO_SEARCH):
 		#AMMO_SEARCH
