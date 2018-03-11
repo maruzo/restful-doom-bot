@@ -34,7 +34,8 @@ while(True): #main loop
 
 	#I am dead
 	if (readData.getObjectDetails(currentPlayerID) == []):
-		sys.exit(0)
+		actions.respawn()
+		continue
 
 
 	plrHP = readData.getPlayerDetails()[1]

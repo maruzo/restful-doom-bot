@@ -66,12 +66,15 @@ def turnAbsAngle(_angle):
 def switchAndShoot(a):
 
 	currentPlayer = readData.getPlayerDetails()
+	print(currentPlayer[4])
 
 	if(currentAmmo() == 0 or currentPlayer[4]==0 or currentPlayer[4]==7): # if no ammo in held gun or fists are equipped, switch to somethin else
 		hasWeapon = [True]+currentPlayer[6]
+		actions.switchWeapon(1)
 	#	hasWeapon=[True]+readData.getWeaponsStatus(plrDetails[0],plrDetails) #add [True] for fists
 		for i in range(6, -1, -1):#start checking from back (6) and end on fists (0) if no ammo
 			hasAmmo = currentPlayer[5][mapWeaponToAmmoType(i)] > 0
+			#print(i,"hasAmmo",hasAmmo,hasWeapon[i])
 			if (hasAmmo  and hasWeapon[i]):
 				actions.switchWeapon(i) #switch to a weapon with ammo
 				time.sleep(1)

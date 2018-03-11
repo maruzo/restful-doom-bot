@@ -6,9 +6,10 @@ import json
 #it returns the entire JSON
 
 port = "6001"
+ip = "http://127.0.0.1:"
 
 def get(url_extension):
-    url = "http://127.0.0.1:" + port
+    url = ip + port
 
     r = requests.get(url + url_extension)
 
@@ -23,7 +24,7 @@ def get(url_extension):
 #url_extension: /api/world/objects
 #pyload: {'type': 'strafe-left','amount': 25}
 def post(url_extension, payload):
-    url = "http://127.0.0.1:" + port
+    url = ip + port
 
     r = requests.post(url + url_extension, data=json.dumps(payload))
 
