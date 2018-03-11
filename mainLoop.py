@@ -62,9 +62,8 @@ while(True): #main loop
 			#send shoot action
 			#if out of ammo, switch weapon
 		else:
-			#no one in line of sight, search for enemies
-			state = ENEMY_SEARCH
-			print("ENEMY_SEARCH")
+			state=AMMO_SEARCH
+			print("AMMO_SEARCH")
 	elif (state==HEALTH_SEARCH):
 		#utilityActions.faceObject(utilityActions.findClosestHealth())
 		NotImplemented
