@@ -165,7 +165,7 @@ def getCurrentAmmoDetails(ID, details):
 
 def LOS(id1, id2):
     data = get("/api/world/los/" + str(id1) + "/" + str(id2))
-    print(data)
+
     return data['los'];
 
 #-----------------------------------------------------------------------------------------

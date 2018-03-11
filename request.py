@@ -5,8 +5,8 @@ import json
 #url_extension: /api/world/objects
 #it returns the entire JSON
 
-port = "6001"
-ip = "http://127.0.0.1:"
+port = "6004"
+ip = "http://192.168.44.103:"
 
 def get(url_extension):
     url = ip + port

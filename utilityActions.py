@@ -68,7 +68,6 @@ def turnAbsAngle(_angle):
 def switchAndShoot(a):
 
 	currentPlayer = readData.getPlayerDetails()
-	print(currentPlayer[4])
 
 	if(currentAmmo() == 0 or currentPlayer[4]==0 or currentPlayer[4]==7): # if no ammo in held gun or fists are equipped, switch to somethin else
 		hasWeapon = [True]+currentPlayer[6]
@@ -206,7 +205,6 @@ def listSeenEnemies():
 	objs = readData.getEnemyDetails(currentPlayerID)
 	if (objs != []):
 		for enemies in objs:
-			print(enemies)
 			if readData.LOS(currentPlayerID, enemies[0]):
 				seenEnemyList.append(enemies)
 
