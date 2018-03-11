@@ -21,6 +21,11 @@ enoughAmmo = True
 
 
 previousZigZagDirection = None
+
+#INIT position woth los
+utilityActions.turnAbsAngle(90)
+actions.forward(150)
+
 while(True): #main loop
 
 	#I am dead
