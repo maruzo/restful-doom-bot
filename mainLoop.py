@@ -55,9 +55,10 @@ while(True): #main loop
 			closestEnemyID = utilityActions.findClosestObject(seenEnemyList)
 			#closesDist=readData.getObjectDetails(closestEnemyID)[3]
 			#closeLowHPenemy = utilityActions.findLowestHPEnemy(seenEnemyList, closesDist*1.5)
-			previousZigZagDirection = offensiveAction.attack(closestEnemyID, currentPlayerID, 100, previousZigZagDirection)
+			[previousZigZagDirection, distance] = offensiveAction.attack(closestEnemyID, currentPlayerID, 100, previousZigZagDirection)
 			utilityActions.faceObject(closestEnemyID)
-			utilityActions.switchAndShoot(1)
+			if (distance < 1800):
+				utilityActions.switchAndShoot(1)
 			#send shoot action
 			#if out of ammo, switch weapon
 		else:

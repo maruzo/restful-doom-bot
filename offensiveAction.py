@@ -18,7 +18,7 @@ def attack(objectID, currentPlayerID, distanceLimit, previousDirection = None, f
         return previousDirection
     #stop moving if I am too close
     if (obj[3] < 70):
-        return previousDirection
+        return [previousDirection, obj[3]]
 
     x = readData.getObjectDetails(objectID)[2][0]
     y = readData.getObjectDetails(objectID)[2][1]
@@ -37,4 +37,4 @@ def attack(objectID, currentPlayerID, distanceLimit, previousDirection = None, f
         actions.strafeRight(10)
         actions.forward(10)
 
-    return futureDirection
+    return [futureDirection, obj[3]]
