@@ -81,4 +81,7 @@ while(True): #main loop
 
 	if(state==ENEMY_SEARCH):#not an else if, as this state could have been assigned during the begging IF statement
 		#ENEMY_SEARCH
-		NotImplemented
+		ClosestObjectID = utilityActions.findNearestNonEnemy()
+		[previousZigZagDirection, distance] = defensiveAction.flee(closestObjectID, currentPlayerID, previousZigZagDirection)
+		utilityActions.faceAwayFromObject(closestObjectID)
+		
