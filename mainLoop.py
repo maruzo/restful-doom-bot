@@ -68,8 +68,7 @@ while(True): #main loop
 			#closeLowHPenemy = utilityActions.findLowestHPEnemy(seenEnemyList, closesDist*1.5)
 			[previousZigZagDirection, distance] = offensiveAction.attack(closestEnemyID, currentPlayerID, previousZigZagDirection)
 			utilityActions.faceObject(closestEnemyID)
-			if (distance < 1800
-			):
+			if (distance < 1800):
 				utilityActions.switchAndShoot(1)
 				count = 0
 			#send shoot action
